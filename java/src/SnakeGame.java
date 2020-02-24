@@ -57,13 +57,23 @@ public class SnakeGame{
 
     public int[] findTailExhaustive(){
         exhaustiveSearch = 0;
+        int lengthOfSnake = 0;
         int[] tail = new int[3];
+
+        for(int i = 0; i < this.game.length;i++){//checks the length
+            for(int j = 0; j < this.game[i].length; j++){
+                if(game[i][j] == true){
+                    lengthOfSnake++;
+                }
+            }
+        }
+
         for(int i = 0; i < this.game.length; i++){
             for(int j = 0; j < this.game[i].length; j++){
                 if((i != this.headPosition[0] && j != this.headPosition[1]) && (neighbors(i,j) == 1)){
                     tail[0] = i;
                     tail[1] = j;
-                    tail[2] = -1;//need to fix here
+                    tail[2] = lengthOfSnake;
                 }
                 exhaustiveSearch++;
             }
