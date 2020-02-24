@@ -24,9 +24,9 @@ public class SnakeGame{
         this.headPosition[1] = y;
     }
 
-    public static void printSnake(){
-        for(int i = 0; i < this.game; i++){
-            for(int j = 0; j < this.game[i]; j++){
+    public void printSnake(){
+        for(int i = 0; i < this.game.length; i++){
+            for(int j = 0; j < this.game[i].length; j++){
                 System.out.print(this.game[i][j]);
             }
             System.out.println("");
@@ -55,13 +55,21 @@ public class SnakeGame{
     }
 
 
-    /*public int[] findTailExhaustive(){
+    public int[] findTailExhaustive(){
+        exhaustiveSearch = 0;
+        int[] tail = new int[3];
         for(int i = 0; i < this.game.length; i++){
             for(int j = 0; j < this.game[i].length; j++){
-                if((i != this.headPosition[0] && j != this.headPosition[1]) &&  )
+                if((i != this.headPosition[0] && j != this.headPosition[1]) && (neighbors(i,j) == 1)){
+                    tail[0] = i;
+                    tail[1] = j;
+                    tail[2] = -1;//need to fix here
+                }
+                exhaustiveSearch++;
             }
         }
-    }*/
+        return tail;
+    }
 
     //recursive material
     //int[] arr = new int[3];//index 0 = tail at x //index 1 = tail y // index 2 = length
