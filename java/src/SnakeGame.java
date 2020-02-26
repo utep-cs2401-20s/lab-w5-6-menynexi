@@ -24,6 +24,7 @@ public class SnakeGame{
         this.headPosition[1] = y;
     }
 
+
     public void printSnake(){
         for(int i = 0; i < this.game.length; i++){
             for(int j = 0; j < this.game[i].length; j++){
@@ -56,7 +57,7 @@ public class SnakeGame{
 
 
     public int[] findTailExhaustive(){
-        exhaustiveSearch = 0;
+        this.exhaustiveSearch = 0;
         int lengthOfSnake = 0;
         int[] tail = new int[3];
 
@@ -70,12 +71,12 @@ public class SnakeGame{
 
         for(int i = 0; i < this.game.length; i++){
             for(int j = 0; j < this.game[i].length; j++){
-                if((i != this.headPosition[0] && j != this.headPosition[1]) && (neighbors(i,j) == 1)){
+                if((i != this.headPosition[0] && j != this.headPosition[1]) && (neighbors(i,j) == 1)){//calls neighbors to cheack the
                     tail[0] = i;
                     tail[1] = j;
                     tail[2] = lengthOfSnake;
                 }
-                exhaustiveSearch++;
+                this.exhaustiveSearch++;
             }
         }
         return tail;
@@ -89,8 +90,74 @@ public class SnakeGame{
     //while(flag != true){
     //}
     //return arr;
+    //curr is not the head
 
-    public static void main(String[] args){
-        //I UPLOADING FROM A NEW LAPTOP
+    public int[] findTailRecursive(){
+        return findTailRecursive(headPosition,headPosition);
     }
+
+    private int[] findTailRecursive(int[] currentPosition, int[] previousPosition){
+        this.recursiveCheck = 0;
+        //up
+        if((currentPosition[0] > 0) && (this.game[currentPosition[0] + 1][currentPosition[1]] == true) && (currentPosition[0] != previousPosition[0] && currentPosition[1] != previousPosition[1])){
+            this.recursiveCheck++;
+            previousPosition[0] = currentPosition[0];
+            previousPosition[1] = currentPosition[1];
+
+            currentPosition[0] = currentPosition[0] + 1;
+            currentPosition[1] = currentPosition[1];
+
+            return findTailRecursive(currentPosition, previousPosition);
+        }
+        //down
+        else if((currentPosition[0] < this.game.length) && (this.game[currentPosition[0] - 1][currentPosition[1]] == true) && (currentPosition[0] != previousPosition[0] && currentPosition[1] != previousPosition[1])){
+            this.recursiveCheck++;
+            previousPosition[0] = currentPosition[0];
+            previousPosition[1] = currentPosition[1];
+
+            currentPosition[0] = currentPosition[0] - 1;
+            currentPosition[1] = currentPosition[1];
+
+            return findTailRecursive(currentPosition, previousPosition);
+        }
+        //left
+        else if((currentPosition[1] > 0) && (this.game[currentPosition[0]][currentPosition[1] - 1] == true) && (currentPosition[0] != previousPosition[0] && currentPosition[1] != previousPosition[1])){
+            this.recursiveCheck++;
+            previousPosition[0] = currentPosition[0];
+            previousPosition[1] = currentPosition[1];
+
+            currentPosition[0] = currentPosition[0];
+            currentPosition[1] = currentPosition[1] - 1;
+
+            return findTailRecursive(currentPosition, previousPosition);
+        }
+        //right
+        else if((currentPosition[1] < this.game.length) && (this.game[currentPosition[0]][currentPosition[1] + 1] == true) && (currentPosition[0] != previousPosition[0] && currentPosition[1] != previousPosition[1])){
+            this.recursiveCheck++;
+            previousPosition[0] = currentPosition[0];
+            previousPosition[1] = currentPosition[1];
+
+            currentPosition[0] = currentPosition[0] + 1;
+            currentPosition[1] = currentPosition[1];
+
+            return findTailRecursive(currentPosition, previousPosition);
+        }
+        else{
+            return currentPosition;
+        }
+    }
+
+    private void resetCounters(){
+        this.recursiveCheck = 0;
+        this.exhaustiveSearch = 0;
+    }
+
+    private static int getRecursiveChecks(){
+        return recursiveCheck;
+    }
+
+    private static int getExhaustiveChecks(){
+        return exhaustiveSearch;
+    }
+
 }
